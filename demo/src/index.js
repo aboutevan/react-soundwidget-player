@@ -7,6 +7,9 @@ class Demo extends Component {
   render() {
     return <div>
       <h1>react-loading-button Demo</h1>
+      <Example />
+
+      <Example/>
       <Example/>
     </div>
   }
