@@ -1,39 +1,39 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SoundCloud from './SoundCloud';
 import Play from './Play';
-import './styles.css'
+import './styles.css';
 import Progress from './Progress';
 import Volume from './Volume';
 
-const styles = {
-  background: 'red',
+const playButtonStyles = {
+  background: `red`,
   padding: `40px`
 };
 
-const Example = (props) => {
+const Example = () => {
   return (
       <div>
         <SoundCloud loader={() => <h1>loading</h1>}>
           {({
-              widget,
-              playing,
               togglePlay,
               seek,
-              volume,
               setVolume,
+              progress,
               duration,
+              playing,
             }) => (
               <div className="blue">
                 <Play togglePlay={togglePlay}
-                      styles={styles}
+                      playing={playing}
+                      styles={playButtonStyles}
                 />
-                <Progress seek={seek} />
+                <Progress seek={seek} progress={progress} duration={duration} />
                 <Volume setVolume={setVolume} />
               </div>
           )}
         </SoundCloud>
       </div>
-  )
-}
-export default Example
+  );
+};
 
+export default Example;

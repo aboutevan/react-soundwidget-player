@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 
 const styles1 = {
   height: `20px`,
   background: `yellow`,
-  transition: `width 0.1s linear`
+  // transition: `width 0.1s linear`
 };
 
 const styles2 = {
@@ -17,7 +19,13 @@ const styles2 = {
   cursor: `pointer`,
 };
 
-export default class extends Component {
+export default class Progress extends Component {
+
+  static propTypes = {
+    progress: PropTypes.number,
+    seek: PropTypes.func,
+    duration: PropTypes.number
+  };
 
   constructor(props){
     super(props);
@@ -55,6 +63,13 @@ export default class extends Component {
     }, () => this.props.seek(this.state.seekPos));
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.progress !== this.props.progress) {
+      // console.log((this.props.progress.currentPosition / this.props.duration) * 100)
+      this.setState({seekPos: (this.props.progress.currentPosition / this.props.duration)});
+    }
+  }
+
   render() {
     return (
         <div>
@@ -63,13 +78,13 @@ export default class extends Component {
             onMouseDown={this.handleMouseDown}
             onMouseUp={this.handleMouseUp}
             style={{
-              position: 'relative',
+              position: `relative`,
               ...styles2
             }}
           >
             <div ref={this.innerRef}
                     style={{
-                      position: 'absolute',
+                      position: `absolute`,
                       left: 0,
                       width: `${this.state.seekPos * 100}%`,
                       ...styles1
@@ -77,6 +92,6 @@ export default class extends Component {
                     />
           </div>
         </div>
-    )
+    );
   }
 }
